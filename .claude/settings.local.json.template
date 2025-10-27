@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version:*)",
+      "Bash(npm --version)",
+      "Read(//YOUR_VAULT_PATH_HERE/**)",
+      "Bash(curl:*)",
+      "Bash(timeout 5 node:*)",
+      "WebSearch",
+      "mcp__smart-connections__get_stats",
+      "mcp__smart-connections__search_notes",
+      "mcp__smart-connections__get_similar_notes",
+      "mcp__smart-connections__get_connection_graph",
+      "mcp__smart-connections__get_note_content",
+      "mcp__obsidian-mcp__obsidian_list_notes",
+      "mcp__obsidian-mcp__obsidian_read_note",
+      "mcp__obsidian-mcp__obsidian_update_note",
+      "mcp__obsidian-mcp__obsidian_global_search",
+      "mcp__obsidian-mcp__obsidian_manage_tags",
+      "mcp__obsidian-mcp__obsidian_manage_frontmatter",
+      "mcp__files-vectorstore__search",
+      "mcp__files-vectorstore__get_stats",
+      "Bash(mkdir:*)",
+      "Bash(tree:*)",
+      "Bash(date:*)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "obsidian-mcp",
+    "smart-connections"
+  ]
+}
