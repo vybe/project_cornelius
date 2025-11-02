@@ -1,5 +1,7 @@
 # Claude Code Settings (contains personal paths)
 .claude/settings.local.json
+.claude/settings.md
+.mcp.json
 
 # Obsidian workspace (personal view settings)
 .obsidian/workspace.json
