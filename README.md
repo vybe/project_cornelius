@@ -327,7 +327,7 @@ Complete folder structure with templates:
 ## 🛠️ Requirements
 
 - [Claude Code](https://claude.ai/claude-code)
-- [Obsidian](https://obsidian.md/)
+- [Obsidian](https://obsidian.md/) - **Must be running with your vault open for Smart Connections MCP to work**
 - Node.js 18+
 - MCP servers (via npm)
 

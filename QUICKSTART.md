@@ -71,8 +71,11 @@ Edit `.mcp.json` and update the SMART_VAULT_PATH to your OBSIDIAN_ROOT:
 
 ## 5. Start & Test (30 sec)
 
+**IMPORTANT**: Open Obsidian with your vault before starting Claude Code. The Smart Connections MCP server requires Obsidian to be running.
+
 ```bash
-# From the project_cornelius directory
+# 1. Open Obsidian with your vault
+# 2. Then start Claude Code from the project_cornelius directory
 claude
 ```
 
@@ -125,7 +128,10 @@ Can you help me create a permanent note about [idea] in the Permanent/ folder?
 
 ## Troubleshooting
 
-### "MCP server not found"
+### "MCP server not found" or "Smart Connections not working"
+
+**First, ensure Obsidian is running with your vault open.** The Smart Connections MCP server requires Obsidian to be running.
+
 ```bash
 # Check installation
 npm list -g @modelcontextprotocol/server-obsidian
