@@ -13,11 +13,13 @@ Capture insights, discover connections, and synthesize knowledge—with AI assis
 cp -r .claude CLAUDE.md /path/to/your/vault/
 
 # 2. Configure vault path
+# Copy the template and configure your vault path:
+cp .claude/settings.md.template .claude/settings.md
 # Edit .claude/settings.md and set:
 # VAULT_BASE_PATH=/your/vault/path
 
 # 3. Configure MCP servers with your vault path
-# IMPORTANT: Update mcp_settings.json with your vault path
+# IMPORTANT: Create .mcp.json with your vault path
 # This is required for Smart Connections and obsidian-mcp to work
 # See MCP-SETUP.md for detailed configuration
 
