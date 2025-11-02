@@ -9,15 +9,14 @@ Capture insights, discover connections, and synthesize knowledge—with AI assis
 ## 🚀 Quick Start
 
 ```bash
-# 1. Install MCP server
-npm install -g @modelcontextprotocol/server-obsidian
-
-# 2. Copy to your vault
+# 1. Copy to your vault
 cp -r .claude CLAUDE.md /path/to/your/vault/
-cp -r Brain/* /path/to/your/vault/
 
-# 3. Configure settings (update YOUR_VAULT_PATH_HERE)
-cp .claude/settings.local.json.template .claude/settings.local.json
+# 2. Configure vault path
+# Edit .claude/settings.md and set:
+# VAULT_BASE_PATH=/your/vault/path
+
+# 3. Update .mcp.json with your vault path
 
 # 4. Start
 cd /path/to/your/vault && claude

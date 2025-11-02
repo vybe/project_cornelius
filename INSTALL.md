@@ -27,26 +27,28 @@ cp CLAUDE.md /path/to/your/vault/
 cp README.md MCP-SETUP.md FOLDER-STRUCTURE.md EXAMPLES.md /path/to/your/vault/
 ```
 
-### Step 2: Configure Settings
+### Step 2: Configure Vault Path
 
-1. **Copy settings template:**
-   ```bash
-   cp .claude/settings.local.json.template /path/to/your/vault/.claude/settings.local.json
-   ```
-
-2. **Edit settings file:**
+1. **Edit settings.md:**
    ```bash
    # Open in your editor
-   code /path/to/your/vault/.claude/settings.local.json
+   code /path/to/your/vault/.claude/settings.md
    # or
-   nano /path/to/your/vault/.claude/settings.local.json
+   nano /path/to/your/vault/.claude/settings.md
    ```
 
-3. **Update vault path:**
-   Replace `//YOUR_VAULT_PATH_HERE/**` with your actual vault path:
-   ```json
-   "Read(//Users/yourname/path/to/vault/**)"
+2. **Update VAULT_BASE_PATH:**
+   Change this line:
    ```
+   VAULT_BASE_PATH=/path/to/your/vault
+   ```
+
+   To your actual vault path:
+   ```
+   VAULT_BASE_PATH=/Users/yourname/Documents/YourVault
+   ```
+
+That's it! All agents and commands will use this path automatically.
 
 ### Step 3: Install MCP Servers
 
@@ -131,38 +133,14 @@ Or create them in Obsidian's UI.
 
 For detailed folder structure, see [FOLDER-STRUCTURE.md](FOLDER-STRUCTURE.md)
 
-### Step 6: Update Agent Paths
-
-Edit each agent file to update paths:
-
-```bash
-cd /path/to/your/vault/.claude/agents
-
-# Open each file and update paths:
-# - vault-manager.md
-# - connection-finder.md
-# - auto-discovery.md
-# - insight-extractor.md
-```
-
-**Find and replace** in each file:
-- Replace `/path/to/your/vault` with your actual vault path
-- Update changelog folder path (e.g., `Meta/Changelogs/`)
-
-**Tip**: Use search-replace in your editor:
-```
-Find: /path/to/your/vault
-Replace: /Users/yourname/Documents/MyVault
-```
-
-### Step 7: Start Claude Code
+### Step 6: Start Claude Code
 
 ```bash
 cd /path/to/your/vault
 claude
 ```
 
-### Step 8: Test Installation
+### Step 7: Test Installation
 
 Try these commands to verify everything works:
 
@@ -206,10 +184,9 @@ If any command fails, see [Troubleshooting](#troubleshooting) below.
 **Issue**: `Permission denied reading vault`
 
 **Solutions**:
-1. Check paths in `.claude/settings.local.json` are correct
-2. Ensure `Read(//path/to/vault/**)` is in `permissions.allow`
-3. Verify file system permissions: `ls -la /path/to/vault`
-4. Try absolute paths with correct format: `//Users/name/vault/**`
+1. Check `VAULT_BASE_PATH` in `.claude/settings.md` is correct
+2. Verify file system permissions: `ls -la /path/to/vault`
+3. Ensure path is absolute (e.g., `/Users/name/vault`)
 
 ### Smart Connections Not Working
 

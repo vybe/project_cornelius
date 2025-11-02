@@ -21,24 +21,23 @@ npm install -g @modelcontextprotocol/server-obsidian
 # Copy to your vault
 cd /path/to/this/template
 cp -r .claude CLAUDE.md /path/to/your/vault/
-
-# Configure settings
-cp .claude/settings.local.json.template /path/to/your/vault/.claude/settings.local.json
 ```
 
-## 3. Configure Path (1 min)
+## 3. Configure Vault Path (1 min)
 
-Edit `/path/to/your/vault/.claude/settings.local.json`:
+Edit `/path/to/your/vault/.claude/settings.md`:
 
-**Find:**
-```json
-"Read(//YOUR_VAULT_PATH_HERE/**)"
+**Change this line:**
+```
+VAULT_BASE_PATH=/path/to/your/vault
 ```
 
-**Replace with your actual path:**
-```json
-"Read(//Users/yourname/Documents/YourVault/**)"
+**To your actual path:**
 ```
+VAULT_BASE_PATH=/Users/yourname/Documents/YourVault
+```
+
+**Then update** `.mcp.json` to match (for Smart Connections MCP)
 
 ## 4. Create Folders (30 sec)
 
@@ -123,8 +122,8 @@ echo '{
 Replace `/path/to/vault` with your actual path.
 
 ### "Permission denied"
-- Check path in `.claude/settings.local.json`
-- Use absolute path with `//` prefix
+- Check `VAULT_BASE_PATH` in `.claude/settings.md`
+- Use absolute path (e.g., `/Users/name/vault`)
 - Verify folder permissions: `ls -la /path/to/vault`
 
 ### Commands not working
