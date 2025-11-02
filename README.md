@@ -47,6 +47,7 @@ cd /path/to/your/vault && claude
 - `/recall <topic>` - Deep 3-layer semantic search
 - `/find-connections <note>` - Discover relationships
 - `/analyze-kb` - Generate structure report
+- `/switch-brain <path>` - Switch to different vault
 
 ### Sample Vault (`Brain/`)
 Complete folder structure with templates:

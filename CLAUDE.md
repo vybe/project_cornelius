@@ -370,6 +370,11 @@ The dated changelog files are the **primary record** - comprehensive and detaile
    - Updates the knowledge-base-analysis.md report
    - Provides insights on thematic clusters and network properties
 
+5. **Switch Brain Command** (`/switch-brain <vault path>`)
+   - Switches to a different Obsidian vault
+   - Updates `.claude/settings.md` and `.mcp.json` configuration files
+   - Requires Claude Code restart for changes to take effect
+
 **Integration with MCP Servers:**
 
 Your environment includes MCP servers that provide additional capabilities through tools. The specific tools available are listed separately, but here are the key workflows and usage instructions:
