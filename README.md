@@ -17,10 +17,12 @@ It's like having a highly specialized AI research assistant that:
 
 **One command to switch contexts:**
 ```bash
-/switch-brain /path/to/work-vault    # Work mode
-/switch-brain /path/to/personal-vault # Personal mode
-/switch-brain /path/to/research-vault # Research mode
+/switch-brain /path/to/work-workspace    # Work mode
+/switch-brain /path/to/personal-workspace # Personal mode
+/switch-brain /path/to/research-workspace # Research mode
 ```
+
+**Note**: Paths point to Obsidian workspace folders (containing `.obsidian/`), not individual vault subfolders.
 
 ---
 
@@ -174,16 +176,16 @@ mindmap
 
 ```bash
 # Working on a project
-/switch-brain /path/to/work-vault
+/switch-brain /path/to/work-workspace
 
 # Personal knowledge work
-/switch-brain /path/to/personal-vault
+/switch-brain /path/to/personal-workspace
 
 # Research mode
-/switch-brain /path/to/research-vault
+/switch-brain /path/to/research-workspace
 ```
 
-Each "brain" is a complete Obsidian vault with its own knowledge graph, allowing context switching between different domains of knowledge.
+Each "brain" is a complete Obsidian workspace (the folder containing `.obsidian/` configuration) with its own knowledge graph. The workspace can contain multiple vaults or have markdown files directly within it, allowing flexible organization and context switching between different domains of knowledge.
 
 ---
 
@@ -215,11 +217,12 @@ Project Cornelius creates a powerful **nested agent system**:
    - Personal knowledge in Obsidian (private, searchable)
    - AI assistance via Claude Code (intelligent, contextual)
 
-2. **Hot-Swappable Brains**
-   - Work brain during office hours
-   - Personal brain for life management
-   - Research brain for deep dives
-   - Creative brain for projects
+2. **Hot-Swappable Workspaces**
+   - Work workspace during office hours
+   - Personal workspace for life management
+   - Research workspace for deep dives
+   - Creative workspace for projects
+   - Each workspace = Obsidian folder with `.obsidian/` config
 
 3. **Progressive Enhancement**
    - Start with basic note capture
@@ -242,14 +245,15 @@ Project Cornelius creates a powerful **nested agent system**:
 git clone https://github.com/vybe/project_cornelius.git
 cd project_cornelius
 
-# 2. Configure your vault path
+# 2. Configure settings
 cp .claude/settings.md.template .claude/settings.md
-# Edit .claude/settings.md and set your vault path:
-# VAULT_BASE_PATH=/path/to/your/vault
+cp .claude/settings.local.json.template .claude/settings.local.json
+# Edit .claude/settings.md and set: VAULT_BASE_PATH=/path/to/workspace
+# (folder containing .obsidian/, NOT a vault subfolder)
 
 # 3. Configure MCP servers
-# Edit .mcp.json and update all vault paths to match your vault
-# Or use: /switch-brain /path/to/your/vault
+# Edit .mcp.json and update SMART_VAULT_PATH
+# Or use: /switch-brain /path/to/workspace (after starting Claude)
 
 # 4. Start Claude Code
 claude

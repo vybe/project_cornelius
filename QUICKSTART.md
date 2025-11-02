@@ -23,33 +23,38 @@ git clone https://github.com/vybe/project_cornelius.git
 cd project_cornelius
 ```
 
-## 3. Configure Vault Path (1 min)
+## 3. Configure Settings (1 min)
 
 ```bash
-# Create settings from template
+# Create settings files from templates
 cp .claude/settings.md.template .claude/settings.md
+cp .claude/settings.local.json.template .claude/settings.local.json
 ```
 
-Edit `.claude/settings.md`:
+Edit `.claude/settings.md` and set your workspace path:
 
-**Change this line:**
 ```
-VAULT_BASE_PATH=/path/to/your/vault
+VAULT_BASE_PATH=/Users/yourname/Documents/YourObsidianWorkspace
 ```
 
-**To your actual vault path:**
-```
-VAULT_BASE_PATH=/Users/yourname/Documents/YourVault
-```
+**IMPORTANT**: Use the folder containing `.obsidian/` directory, NOT a vault subfolder.
+
+**Examples**:
+- ✅ Correct: `/Users/yourname/Dropbox/Cornelius` (contains `.obsidian/`)
+- ❌ Wrong: `/Users/yourname/Dropbox/Cornelius/Brain` (vault subfolder)
+
+**NOTE**: `.claude/settings.local.json` enables MCP permissions and doesn't need editing.
 
 ## 4. Configure MCP Servers (1 min)
 
-Edit `.mcp.json` and update all vault paths, **or** use the switch-brain command:
+Edit `.mcp.json` and update all workspace paths, **or** use the switch-brain command:
 
 ```bash
 # After starting Claude Code, run:
-/switch-brain /Users/yourname/Documents/YourVault
+/switch-brain /Users/yourname/Documents/YourObsidianWorkspace
 ```
+
+**Remember**: Use the workspace folder path (with `.obsidian/`), not a vault subfolder.
 
 ## 5. Start & Test (30 sec)
 
@@ -124,12 +129,13 @@ echo '{
 }' > ~/.config/claude-code/mcp_settings.json
 ```
 
-Replace `/path/to/vault` with your actual path.
+Replace `/path/to/vault` with your actual workspace path.
 
 ### "Permission denied"
 - Check `VAULT_BASE_PATH` in `.claude/settings.md`
-- Use absolute path (e.g., `/Users/name/vault`)
-- Verify folder permissions: `ls -la /path/to/vault`
+- Use absolute path (e.g., `/Users/name/ObsidianWorkspace`)
+- Ensure path points to workspace folder (with `.obsidian/`), not vault subfolder
+- Verify folder permissions: `ls -la /path/to/workspace`
 
 ### Commands not working
 - Verify files in `.claude/commands/` exist

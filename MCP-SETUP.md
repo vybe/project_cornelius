@@ -1,20 +1,25 @@
 # MCP Server Setup Guide
 
-This guide covers installation and configuration of MCP (Model Context Protocol) servers for Claude Code integration with your Obsidian vault.
+This guide covers installation and configuration of MCP (Model Context Protocol) servers for Claude Code integration with your Obsidian workspace.
 
 ## Overview
 
-MCP servers enable Claude Code to interact with your Obsidian vault programmatically. This template uses:
+MCP servers enable Claude Code to interact with your Obsidian workspace programmatically. This template uses:
 
-1. **obsidian-mcp**: Direct vault operations (CRUD, search, tags)
+1. **obsidian-mcp**: Direct workspace operations (CRUD, search, tags)
 2. **smart-connections**: Semantic search and similarity analysis
 3. **files-vectorstore** (optional): Broad file system search
+
+**IMPORTANT**: MCP servers should point to your Obsidian **workspace folder** (the folder containing `.obsidian/` directory), NOT individual vault subfolders. This allows you to:
+- Work with multiple vaults in one workspace
+- Access the Obsidian configuration
+- Switch between different vault contexts seamlessly
 
 ## Prerequisites
 
 - Node.js 18 or higher
 - npm or yarn package manager
-- Obsidian vault with notes
+- Obsidian workspace with notes (folder containing `.obsidian/` directory)
 - Claude Code installed
 
 ## Installation
@@ -66,43 +71,41 @@ npm install -g @lishenxydlgzs/simple-files-vectorstore
 
 ## Configuration
 
-### Configure Claude Code Settings
+### Configure Claude Code Permissions
 
-Create or edit `.claude/settings.local.json`:
+**CRITICAL**: Create `.claude/settings.local.json` (NOT in project root):
+
+```bash
+# From project root
+cp .claude/settings.local.json.template .claude/settings.local.json
+```
+
+Edit `.claude/settings.local.json`:
 
 ```json
 {
   "permissions": {
     "allow": [
-      "Read(//path/to/your/vault/**)",
       "Bash(node --version:*)",
+      "Bash(npm --version)",
       "WebSearch",
       "mcp__smart-connections__get_stats",
       "mcp__smart-connections__search_notes",
       "mcp__smart-connections__get_similar_notes",
       "mcp__smart-connections__get_connection_graph",
-      "mcp__smart-connections__get_note_content",
-      "mcp__obsidian-mcp__obsidian_list_notes",
-      "mcp__obsidian-mcp__obsidian_read_note",
-      "mcp__obsidian-mcp__obsidian_update_note",
-      "mcp__obsidian-mcp__obsidian_global_search",
-      "mcp__obsidian-mcp__obsidian_manage_tags",
-      "mcp__obsidian-mcp__obsidian_manage_frontmatter",
-      "Bash(mkdir:*)",
-      "Bash(tree:*)"
+      "mcp__smart-connections__get_note_content"
     ],
     "deny": [],
     "ask": []
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
-    "obsidian-mcp",
     "smart-connections"
   ]
 }
 ```
 
-**IMPORTANT**: Replace `//path/to/your/vault/**` with your actual vault path.
+**NOTE**: This file grants permissions for MCP tools. Workspace paths are configured separately in `.mcp.json` and `.claude/settings.md`.
 
 ### Configure MCP Server Connection
 
@@ -119,19 +122,25 @@ Claude Code needs to know how to connect to your MCP servers. This is typically 
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-obsidian",
-        "/path/to/your/vault"
+        "/path/to/your/workspace"
       ]
     },
     "smart-connections": {
       "command": "node",
       "args": [
         "/path/to/obsidian/.obsidian/plugins/smart-connections/mcp-server.js",
-        "/path/to/your/vault"
+        "/path/to/your/workspace"
       ]
     }
   }
 }
 ```
+
+**IMPORTANT**: Use your workspace folder path (containing `.obsidian/`), not a vault subfolder.
+
+**Example**:
+- ✅ Correct: `/Users/yourname/Dropbox/Cornelius`
+- ❌ Wrong: `/Users/yourname/Dropbox/Cornelius/Brain`
 
 ## Verification
 
@@ -176,12 +185,13 @@ This command uses both MCP servers to provide comprehensive search results.
 
 ### Permission Denied
 
-**Error**: `Permission denied reading vault`
+**Error**: `Permission denied reading workspace`
 
 **Solution**:
-1. Check vault path in `.claude/settings.local.json`
-2. Ensure `Read(//path/to/vault/**)` is in permissions.allow
-3. Verify file system permissions on vault directory
+1. Check workspace path in `.claude/settings.local.json`
+2. Ensure `Read(//path/to/workspace/**)` is in permissions.allow
+3. Verify path points to workspace folder (with `.obsidian/`), not vault subfolder
+4. Verify file system permissions on workspace directory: `ls -la /path/to/workspace`
 
 ### Smart Connections Not Indexing
 
@@ -206,12 +216,13 @@ This command uses both MCP servers to provide comprehensive search results.
 
 ## Performance Optimization
 
-### For Large Vaults (1000+ notes)
+### For Large Workspaces (1000+ notes)
 
 1. **Smart Connections**:
    - Use lighter embedding model
    - Exclude large folders from indexing
    - Index only markdown files
+   - Configure specific vault folders if workspace contains multiple vaults
 
 2. **obsidian-mcp**:
    - Use specific folder paths in commands
@@ -237,13 +248,21 @@ Edit agent files in `.claude/agents/` to adjust:
 Lower threshold = more connections, less relevance
 Higher threshold = fewer connections, more relevance
 
-### Multiple Vaults
+### Multiple Vaults in One Workspace
 
-To work with multiple vaults:
+Obsidian workspaces can contain multiple vaults as subfolders. To work with this setup:
 
-1. Create separate `.claude/` directories in each vault
-2. Configure paths in each `settings.local.json`
-3. Switch between vaults by changing directory in Claude Code
+1. Point MCP servers to the workspace folder (parent containing `.obsidian/`)
+2. The workspace can access all vaults within it
+3. Use `/switch-brain` to point to different workspace folders if working with completely separate workspaces
+4. Organize workspace structure like:
+   ```
+   /Workspace/
+     .obsidian/          # Main Obsidian config
+     Vault1/             # First vault
+     Vault2/             # Second vault
+     *.md files          # Or files directly in workspace
+   ```
 
 ### Custom MCP Servers
 

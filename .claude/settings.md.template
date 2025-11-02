@@ -4,8 +4,26 @@ description: System configuration
 
 # Configuration
 
-VAULT_BASE_PATH=/path/to/your/vault
+VAULT_BASE_PATH=/path/to/your/obsidian/workspace
 
 ---
 
-**Setup**: Replace `/path/to/your/vault` with your actual vault path, then update `.mcp.json` and `settings.local.json` to match.
+**Setup Instructions**:
+
+1. Replace `/path/to/your/obsidian/workspace` with the path to your **Obsidian workspace folder**
+2. **Important**: This should be the folder that contains your `.obsidian/` directory, NOT a specific vault subfolder
+3. If you have multiple vaults, this workspace folder can contain all of them
+4. After updating this path, also update `.mcp.json` to match
+
+**Example**:
+- ✅ Correct: `VAULT_BASE_PATH=/Users/yourname/Dropbox/Cornelius`
+- ❌ Wrong: `VAULT_BASE_PATH=/Users/yourname/Dropbox/Cornelius/Brain`
+
+The workspace folder structure typically looks like:
+```
+/YourWorkspace/
+  .obsidian/          # Obsidian configuration
+  Vault1/             # First vault (optional)
+  Vault2/             # Second vault (optional)
+  *.md files          # Or markdown files directly in workspace
+```
