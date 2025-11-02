@@ -9,22 +9,21 @@ Capture insights, discover connections, and synthesize knowledge—with AI assis
 ## 🚀 Quick Start
 
 ```bash
-# 1. Copy to your vault
-cp -r .claude CLAUDE.md /path/to/your/vault/
+# 1. Clone this repository
+git clone https://github.com/vybe/project_cornelius.git
+cd project_cornelius
 
-# 2. Configure vault path
-# Copy the template and configure your vault path:
+# 2. Configure your vault path
 cp .claude/settings.md.template .claude/settings.md
-# Edit .claude/settings.md and set:
-# VAULT_BASE_PATH=/your/vault/path
+# Edit .claude/settings.md and set your vault path:
+# VAULT_BASE_PATH=/path/to/your/vault
 
-# 3. Configure MCP servers with your vault path
-# IMPORTANT: Create .mcp.json with your vault path
-# This is required for Smart Connections and obsidian-mcp to work
-# See MCP-SETUP.md for detailed configuration
+# 3. Configure MCP servers
+# Edit .mcp.json and update all vault paths to match your vault
+# Or use: /switch-brain /path/to/your/vault
 
-# 4. Start
-cd /path/to/your/vault && claude
+# 4. Start Claude Code
+claude
 ```
 
 → **[QUICKSTART.md](QUICKSTART.md)** for 5-minute setup

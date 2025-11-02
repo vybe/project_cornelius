@@ -1,6 +1,6 @@
 # Quick Start (5 Minutes)
 
-Get Claude Code Second Brain running in your Obsidian vault in 5 minutes.
+Get Claude Code Second Brain running with your Obsidian vault in 5 minutes.
 
 ## 1. Prerequisites (2 min)
 
@@ -15,41 +15,46 @@ node --version  # Should be 18+
 npm install -g @modelcontextprotocol/server-obsidian
 ```
 
-## 2. Install in Vault (1 min)
+## 2. Clone Repository (30 sec)
 
 ```bash
-# Copy to your vault
-cd /path/to/this/template
-cp -r .claude CLAUDE.md /path/to/your/vault/
+# Clone this repository
+git clone https://github.com/vybe/project_cornelius.git
+cd project_cornelius
 ```
 
 ## 3. Configure Vault Path (1 min)
 
-Edit `/path/to/your/vault/.claude/settings.md`:
+```bash
+# Create settings from template
+cp .claude/settings.md.template .claude/settings.md
+```
+
+Edit `.claude/settings.md`:
 
 **Change this line:**
 ```
 VAULT_BASE_PATH=/path/to/your/vault
 ```
 
-**To your actual path:**
+**To your actual vault path:**
 ```
 VAULT_BASE_PATH=/Users/yourname/Documents/YourVault
 ```
 
-**Then update** `.mcp.json` to match (for Smart Connections MCP)
+## 4. Configure MCP Servers (1 min)
 
-## 4. Create Folders (30 sec)
+Edit `.mcp.json` and update all vault paths, **or** use the switch-brain command:
 
 ```bash
-cd /path/to/your/vault
-mkdir -p Inbox Permanent MOCs Output Meta/Changelogs
+# After starting Claude Code, run:
+/switch-brain /Users/yourname/Documents/YourVault
 ```
 
 ## 5. Start & Test (30 sec)
 
 ```bash
-cd /path/to/your/vault
+# From the project_cornelius directory
 claude
 ```
 

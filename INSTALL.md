@@ -1,6 +1,6 @@
 # Installation Guide
 
-Quick start guide to get the Claude Code Second Brain system running in your Obsidian vault.
+Detailed guide to get the Claude Code Second Brain system running with your Obsidian vault.
 
 ## Prerequisites Checklist
 
@@ -8,36 +8,36 @@ Quick start guide to get the Claude Code Second Brain system running in your Obs
 - [ ] [Obsidian](https://obsidian.md/) with an existing vault
 - [ ] Node.js 18+ installed (`node --version`)
 - [ ] npm or yarn installed (`npm --version`)
+- [ ] Git installed (`git --version`)
 
 ## Installation Steps
 
-### Step 1: Copy Files to Your Vault
+### Step 1: Clone the Repository
 
 ```bash
-# Navigate to this template directory
-cd /path/to/claude-second-brain-template
-
-# Copy .claude directory to your vault
-cp -r .claude /path/to/your/vault/
-
-# Copy CLAUDE.md to your vault
-cp CLAUDE.md /path/to/your/vault/
-
-# Copy documentation (optional but recommended)
-cp README.md MCP-SETUP.md FOLDER-STRUCTURE.md EXAMPLES.md /path/to/your/vault/
+# Clone this repository
+git clone https://github.com/vybe/project_cornelius.git
+cd project_cornelius
 ```
+
+This creates a standalone directory that will connect to your existing Obsidian vault(s).
 
 ### Step 2: Configure Vault Path
 
-1. **Edit settings.md:**
+1. **Create settings file from template:**
    ```bash
-   # Open in your editor
-   code /path/to/your/vault/.claude/settings.md
-   # or
-   nano /path/to/your/vault/.claude/settings.md
+   cp .claude/settings.md.template .claude/settings.md
    ```
 
-2. **Update VAULT_BASE_PATH:**
+2. **Edit settings.md:**
+   ```bash
+   # Open in your editor
+   code .claude/settings.md
+   # or
+   nano .claude/settings.md
+   ```
+
+3. **Update VAULT_BASE_PATH:**
    Change this line:
    ```
    VAULT_BASE_PATH=/path/to/your/vault
@@ -76,21 +76,16 @@ For detailed MCP setup, see [MCP-SETUP.md](MCP-SETUP.md)
 
 ### Step 4: Configure MCP Connection
 
-Create or edit MCP settings file:
+Edit the `.mcp.json` file in the project directory to point to your vault:
 
-**Linux/Mac:**
 ```bash
-mkdir -p ~/.config/claude-code
-nano ~/.config/claude-code/mcp_settings.json
+# Open .mcp.json
+code .mcp.json
+# or
+nano .mcp.json
 ```
 
-**Windows:**
-```cmd
-mkdir %APPDATA%\claude-code
-notepad %APPDATA%\claude-code\mcp_settings.json
-```
-
-**Add this configuration:**
+**Update all vault paths** (there are 3 instances):
 ```json
 {
   "mcpServers": {
@@ -98,21 +93,38 @@ notepad %APPDATA%\claude-code\mcp_settings.json
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-obsidian",
-        "/path/to/your/vault"
+        "/Users/yourname/Documents/YourVault"  // <- Update this
+      ]
+    },
+    "smart-connections": {
+      "command": "node",
+      "args": [
+        "/Users/yourname/Documents/YourVault/.obsidian/plugins/smart-connections/mcp-server.js",  // <- Update this
+        "/Users/yourname/Documents/YourVault"  // <- Update this
       ]
     }
   }
 }
 ```
 
-Replace `/path/to/your/vault` with your actual vault path.
+**OR use the /switch-brain command** after starting Claude Code:
+```bash
+# Start Claude Code first
+claude
 
-### Step 5: Create Folder Structure
+# Then run:
+/switch-brain /Users/yourname/Documents/YourVault
+```
 
-Create recommended folders in your vault:
+This will automatically update both `.claude/settings.md` and `.mcp.json` files.
+
+### Step 5: Create Folder Structure (Optional)
+
+If your vault doesn't already have a structure, create recommended folders:
 
 ```bash
-cd /path/to/your/vault
+# Navigate to your vault
+cd /Users/yourname/Documents/YourVault
 
 # Create core folders
 mkdir -p Inbox/Quick\ Captures
@@ -136,7 +148,10 @@ For detailed folder structure, see [FOLDER-STRUCTURE.md](FOLDER-STRUCTURE.md)
 ### Step 6: Start Claude Code
 
 ```bash
-cd /path/to/your/vault
+# Navigate back to the project directory
+cd /path/to/project_cornelius
+
+# Start Claude Code
 claude
 ```
 
@@ -223,17 +238,16 @@ If any command fails, see [Troubleshooting](#troubleshooting) below.
 
 ### Optional Enhancements
 
-1. **Configure Git** (recommended for version control):
+1. **Protect local configuration** (recommended):
    ```bash
-   cd /path/to/your/vault
-   git init
-   git add .claude/ CLAUDE.md
-   git commit -m "Add Claude Code second brain setup"
+   cd /path/to/project_cornelius
 
-   # Add .gitignore
-   echo ".claude/settings.local.json" >> .gitignore
-   echo ".obsidian/workspace*" >> .gitignore
+   # Create .gitignore if needed
+   echo ".claude/settings.md" >> .gitignore
+   echo ".mcp.json" >> .gitignore
    ```
+
+   This prevents your local vault paths from being committed.
 
 2. **Install files-vectorstore** (optional, for broader search):
    ```bash
@@ -305,10 +319,11 @@ To update the system:
 To remove:
 
 ```bash
-cd /path/to/your/vault
-rm -rf .claude/
-rm CLAUDE.md
-# Optionally remove created folders
+# Simply delete the project directory
+rm -rf /path/to/project_cornelius
+
+# Your vault remains untouched
+# Optionally remove any folders created in your vault
 ```
 
 ---
