@@ -35,7 +35,7 @@ Project Cornelius is a **multi-layered knowledge management system** that create
 ```mermaid
 graph TB
     subgraph "User Space"
-        User[👤 User]
+        User[User]
     end
 
     subgraph "Claude Code Layer"
@@ -44,21 +44,21 @@ graph TB
     end
 
     subgraph "Project Cornelius"
-        CONFIG[".claude/ Config"]
-        AGENTS["🤖 Specialized Agents<br/>(vault-manager, connection-finder,<br/>auto-discovery, insight-extractor)"]
-        COMMANDS["⚡ Commands<br/>(/search-vault, /recall,<br/>/find-connections, /switch-brain)"]
-        MCP["MCP Servers<br/>(Obsidian-MCP, Smart Connections)"]
+        CONFIG[.claude Config]
+        AGENTS[Specialized Agents]
+        COMMANDS[Slash Commands]
+        MCP[MCP Servers]
     end
 
     subgraph "Knowledge Layer"
-        BRAIN1["🧠 Brain 1<br/>(Work Vault)"]
-        BRAIN2["🧠 Brain 2<br/>(Personal Vault)"]
-        BRAIN3["🧠 Brain 3<br/>(Research Vault)"]
+        BRAIN1[Brain 1 - Work]
+        BRAIN2[Brain 2 - Personal]
+        BRAIN3[Brain 3 - Research]
     end
 
     subgraph "Storage"
-        GIT[Git Repository<br/>(Version Control)]
-        OBS[Obsidian App<br/>(Visual Interface)]
+        GIT[Git Repository]
+        OBS[Obsidian App]
     end
 
     User --> CC
@@ -88,22 +88,22 @@ graph LR
     end
 
     subgraph "Processing Pipeline"
-        CLAUDE_PROMPT[System Prompt<br/>Instruction Set]
-        ROUTER[Command/Agent<br/>Router]
-        PROCESS[Processing<br/>Engine]
+        CLAUDE_PROMPT[System Prompt]
+        ROUTER[Command Router]
+        PROCESS[Processing Engine]
     end
 
     subgraph "Knowledge Operations"
-        CAPTURE[📥 Capture<br/>Insights]
-        CONNECT[🔗 Connect<br/>Ideas]
-        CREATE[✨ Create<br/>Content]
-        SEARCH[🔍 Search<br/>Knowledge]
+        CAPTURE[Capture Insights]
+        CONNECT[Connect Ideas]
+        CREATE[Create Content]
+        SEARCH[Search Knowledge]
     end
 
     subgraph "Brain Interface"
-        VAULT[Active Brain<br/>/path/to/vault]
-        EMBED[Embeddings<br/>Semantic Layer]
-        GRAPH[Knowledge<br/>Graph]
+        VAULT[Active Brain]
+        EMBED[Embeddings]
+        GRAPH[Knowledge Graph]
     end
 
     subgraph "Output"
@@ -137,11 +137,11 @@ graph LR
 
 ```mermaid
 mindmap
-  root((Project<br/>Cornelius))
+  root((Project Cornelius))
     Capture
       Extract Insights
       Preserve Voice
-      Tag & Organize
+      Tag and Organize
       Source Attribution
     Connect
       Find Patterns
