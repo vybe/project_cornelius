@@ -1,29 +1,69 @@
 ---
-description: System configuration
+description: System configuration - All absolute paths are defined here
 ---
 
-# Configuration
+# System Configuration
 
-VAULT_BASE_PATH=/path/to/your/obsidian/workspace
+## Vault Paths
+
+### Obsidian Root (MCP Server)
+OBSIDIAN_ROOT=/path/to/your/Obsidian
+
+This is where MCP Smart Connections indexes from (the Obsidian application folder).
+
+### Brain Vault (Your Notes)
+VAULT_PATH=/path/to/your/Obsidian/Brain
+
+This is your actual vault containing all your notes.
 
 ---
 
-**Setup Instructions**:
+## Setup Instructions
 
-1. Replace `/path/to/your/obsidian/workspace` with the path to your **Obsidian workspace folder**
-2. **Important**: This should be the folder that contains your `.obsidian/` directory, NOT a specific vault subfolder
-3. If you have multiple vaults, this workspace folder can contain all of them
-4. After updating this path, also update `.mcp.json` to match
+1. **Find your Obsidian folder structure:**
+   - Locate your Obsidian installation (e.g., `/Users/yourname/Dropbox/Obsidian`)
+   - This folder should contain multiple vaults (Brain, etc.)
+   - Each vault has its own `.obsidian/` configuration
 
-**Example**:
-- ✅ Correct: `VAULT_BASE_PATH=/Users/yourname/Dropbox/Cornelius`
-- ❌ Wrong: `VAULT_BASE_PATH=/Users/yourname/Dropbox/Cornelius/Brain`
+2. **Update OBSIDIAN_ROOT:**
+   - Set to your Obsidian application folder
+   - Example: `/Users/yourname/Dropbox/Obsidian`
 
-The workspace folder structure typically looks like:
+3. **Update VAULT_PATH:**
+   - Set to your specific vault folder (usually `Brain`)
+   - Example: `/Users/yourname/Dropbox/Obsidian/Brain`
+
+4. **Update `.mcp.json`:**
+   - Set `SMART_VAULT_PATH` to match `OBSIDIAN_ROOT` (NOT VAULT_PATH)
+   - This is a technical requirement for MCP to work
+
+---
+
+## Example Configuration
+
+**Your folder structure:**
 ```
-/YourWorkspace/
-  .obsidian/          # Obsidian configuration
-  Vault1/             # First vault (optional)
-  Vault2/             # Second vault (optional)
-  *.md files          # Or markdown files directly in workspace
+/Users/yourname/Dropbox/Obsidian/          ← OBSIDIAN_ROOT
+├── .obsidian/                              ← Obsidian app config
+└── Brain/                                  ← VAULT_PATH
+    ├── .obsidian/                          ← Vault config
+    ├── 00-Inbox/
+    ├── 01-Sources/
+    ├── 02-Permanent/
+    └── ... other folders
 ```
+
+**Your settings should be:**
+```
+OBSIDIAN_ROOT=/Users/yourname/Dropbox/Obsidian
+VAULT_PATH=/Users/yourname/Dropbox/Obsidian/Brain
+```
+
+---
+
+## Important Notes
+
+- **MCP must point to Obsidian root** - Technical requirement
+- **Your notes are in the Brain subfolder** - File operations target this
+- **MCP search results** use paths like `Brain/02-Permanent/Note.md`
+- After updating, run `/switch-brain` command or manually update `.mcp.json`

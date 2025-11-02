@@ -10,16 +10,16 @@ MCP servers enable Claude Code to interact with your Obsidian workspace programm
 2. **smart-connections**: Semantic search and similarity analysis
 3. **files-vectorstore** (optional): Broad file system search
 
-**IMPORTANT**: MCP servers should point to your Obsidian **workspace folder** (the folder containing `.obsidian/` directory), NOT individual vault subfolders. This allows you to:
-- Work with multiple vaults in one workspace
-- Access the Obsidian configuration
-- Switch between different vault contexts seamlessly
+**IMPORTANT**: MCP servers should point to your **Obsidian root folder** (typically contains multiple vaults like "Brain"). This is a technical requirement that allows:
+- MCP to properly index all vaults
+- Smart Connections to work correctly
+- File paths to be referenced relative to the Obsidian root
 
 ## Prerequisites
 
 - Node.js 18 or higher
 - npm or yarn package manager
-- Obsidian workspace with notes (folder containing `.obsidian/` directory)
+- Obsidian installation with at least one vault (e.g., Brain)
 - Claude Code installed
 
 ## Installation
@@ -105,7 +105,7 @@ Edit `.claude/settings.local.json`:
 }
 ```
 
-**NOTE**: This file grants permissions for MCP tools. Workspace paths are configured separately in `.mcp.json` and `.claude/settings.md`.
+**NOTE**: This file grants permissions for MCP tools. Vault paths are configured separately in `.mcp.json` and `.claude/settings.md`.
 
 ### Configure MCP Server Connection
 
@@ -122,25 +122,38 @@ Claude Code needs to know how to connect to your MCP servers. This is typically 
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-obsidian",
-        "/path/to/your/workspace"
+        "/Users/yourname/Dropbox/Obsidian"
       ]
     },
     "smart-connections": {
       "command": "node",
       "args": [
-        "/path/to/obsidian/.obsidian/plugins/smart-connections/mcp-server.js",
-        "/path/to/your/workspace"
-      ]
+        "/path/to/smart-connections-mcp/dist/index.js"
+      ],
+      "env": {
+        "SMART_VAULT_PATH": "/Users/yourname/Dropbox/Obsidian"
+      }
     }
   }
 }
 ```
 
-**IMPORTANT**: Use your workspace folder path (containing `.obsidian/`), not a vault subfolder.
+**IMPORTANT**: Point to your Obsidian root folder (NOT the Brain subfolder).
 
-**Example**:
-- ✅ Correct: `/Users/yourname/Dropbox/Cornelius`
-- ❌ Wrong: `/Users/yourname/Dropbox/Cornelius/Brain`
+**Example folder structure**:
+```
+/Users/yourname/Dropbox/Obsidian/     ← Use this path for MCP
+├── .obsidian/                          ← Obsidian app config
+└── Brain/                              ← Your vault (notes live here)
+    ├── .obsidian/                      ← Vault config
+    ├── 00-Inbox/
+    ├── 02-Permanent/
+    └── ...
+```
+
+**Path configuration**:
+- ✅ **MCP servers**: `/Users/yourname/Dropbox/Obsidian` (Obsidian root)
+- ✅ **Your notes**: `/Users/yourname/Dropbox/Obsidian/Brain` (vault folder)
 
 ## Verification
 
@@ -188,10 +201,10 @@ This command uses both MCP servers to provide comprehensive search results.
 **Error**: `Permission denied reading workspace`
 
 **Solution**:
-1. Check workspace path in `.claude/settings.local.json`
-2. Ensure `Read(//path/to/workspace/**)` is in permissions.allow
-3. Verify path points to workspace folder (with `.obsidian/`), not vault subfolder
-4. Verify file system permissions on workspace directory: `ls -la /path/to/workspace`
+1. Check vault paths in `.claude/settings.md`
+2. Verify `OBSIDIAN_ROOT` points to Obsidian folder, `VAULT_PATH` points to Brain
+3. Check `.mcp.json` has `SMART_VAULT_PATH` matching `OBSIDIAN_ROOT`
+4. Verify file system permissions: `ls -la /path/to/Obsidian`
 
 ### Smart Connections Not Indexing
 
@@ -216,13 +229,13 @@ This command uses both MCP servers to provide comprehensive search results.
 
 ## Performance Optimization
 
-### For Large Workspaces (1000+ notes)
+### For Large Vaults (1000+ notes)
 
 1. **Smart Connections**:
    - Use lighter embedding model
    - Exclude large folders from indexing
    - Index only markdown files
-   - Configure specific vault folders if workspace contains multiple vaults
+   - Configure to index only your Brain vault if you have multiple vaults
 
 2. **obsidian-mcp**:
    - Use specific folder paths in commands
@@ -248,20 +261,23 @@ Edit agent files in `.claude/agents/` to adjust:
 Lower threshold = more connections, less relevance
 Higher threshold = fewer connections, more relevance
 
-### Multiple Vaults in One Workspace
+### Multiple Vaults in Obsidian
 
-Obsidian workspaces can contain multiple vaults as subfolders. To work with this setup:
+Obsidian can contain multiple vaults as subfolders. To work with this setup:
 
-1. Point MCP servers to the workspace folder (parent containing `.obsidian/`)
-2. The workspace can access all vaults within it
-3. Use `/switch-brain` to point to different workspace folders if working with completely separate workspaces
-4. Organize workspace structure like:
+1. Point MCP servers to the Obsidian root folder (e.g., `/Dropbox/Obsidian`)
+2. Set `VAULT_PATH` in settings.md to your primary vault (e.g., `Brain`)
+3. MCP can access all vaults, but file operations target `VAULT_PATH`
+4. Example structure:
    ```
-   /Workspace/
-     .obsidian/          # Main Obsidian config
-     Vault1/             # First vault
-     Vault2/             # Second vault
-     *.md files          # Or files directly in workspace
+   /Dropbox/Obsidian/
+     .obsidian/          # Obsidian app config
+     Brain/              # Primary vault (VAULT_PATH)
+       .obsidian/        # Vault-specific config
+       02-Permanent/
+       03-MOCs/
+     Work/               # Another vault
+     Personal/           # Another vault
    ```
 
 ### Custom MCP Servers

@@ -31,30 +31,43 @@ cp .claude/settings.md.template .claude/settings.md
 cp .claude/settings.local.json.template .claude/settings.local.json
 ```
 
-Edit `.claude/settings.md` and set your workspace path:
+Edit `.claude/settings.md` and set your paths:
 
 ```
-VAULT_BASE_PATH=/Users/yourname/Documents/YourObsidianWorkspace
+OBSIDIAN_ROOT=/Users/yourname/Dropbox/Obsidian
+VAULT_PATH=/Users/yourname/Dropbox/Obsidian/Brain
 ```
 
-**IMPORTANT**: Use the folder containing `.obsidian/` directory, NOT a vault subfolder.
+**IMPORTANT**:
+- `OBSIDIAN_ROOT` = Your Obsidian folder (contains multiple vaults)
+- `VAULT_PATH` = Your specific vault folder (usually called "Brain")
 
-**Examples**:
-- ✅ Correct: `/Users/yourname/Dropbox/Cornelius` (contains `.obsidian/`)
-- ❌ Wrong: `/Users/yourname/Dropbox/Cornelius/Brain` (vault subfolder)
+**Example folder structure**:
+```
+/Users/yourname/Dropbox/Obsidian/     ← OBSIDIAN_ROOT
+└── Brain/                             ← VAULT_PATH
+    ├── .obsidian/
+    ├── 00-Inbox/
+    ├── 02-Permanent/
+    └── ... other folders
+```
 
 **NOTE**: `.claude/settings.local.json` enables MCP permissions and doesn't need editing.
 
 ## 4. Configure MCP Servers (1 min)
 
-Edit `.mcp.json` and update all workspace paths, **or** use the switch-brain command:
+Edit `.mcp.json` and update the SMART_VAULT_PATH to your OBSIDIAN_ROOT:
 
-```bash
-# After starting Claude Code, run:
-/switch-brain /Users/yourname/Documents/YourObsidianWorkspace
+```json
+"SMART_VAULT_PATH": "${SMART_VAULT_PATH:-/Users/yourname/Dropbox/Obsidian}"
 ```
 
-**Remember**: Use the workspace folder path (with `.obsidian/`), not a vault subfolder.
+**IMPORTANT**: MCP must point to OBSIDIAN_ROOT (not your Brain vault folder). This is a technical requirement.
+
+**Or** use the switch-brain command after starting Claude Code:
+```bash
+/switch-brain /Users/yourname/Dropbox/Obsidian
+```
 
 ## 5. Start & Test (30 sec)
 
@@ -129,13 +142,14 @@ echo '{
 }' > ~/.config/claude-code/mcp_settings.json
 ```
 
-Replace `/path/to/vault` with your actual workspace path.
+Replace `/path/to/vault` with your OBSIDIAN_ROOT path.
 
 ### "Permission denied"
-- Check `VAULT_BASE_PATH` in `.claude/settings.md`
-- Use absolute path (e.g., `/Users/name/ObsidianWorkspace`)
-- Ensure path points to workspace folder (with `.obsidian/`), not vault subfolder
-- Verify folder permissions: `ls -la /path/to/workspace`
+- Check `OBSIDIAN_ROOT` and `VAULT_PATH` in `.claude/settings.md`
+- Use absolute paths (e.g., `/Users/name/Dropbox/Obsidian`)
+- Verify OBSIDIAN_ROOT points to Obsidian folder, VAULT_PATH points to Brain
+- Check `.mcp.json` has SMART_VAULT_PATH = OBSIDIAN_ROOT
+- Verify folder permissions: `ls -la /path/to/Obsidian`
 
 ### Commands not working
 - Verify files in `.claude/commands/` exist
