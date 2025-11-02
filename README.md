@@ -16,7 +16,10 @@ cp -r .claude CLAUDE.md /path/to/your/vault/
 # Edit .claude/settings.md and set:
 # VAULT_BASE_PATH=/your/vault/path
 
-# 3. Update .mcp.json with your vault path
+# 3. Configure MCP servers with your vault path
+# IMPORTANT: Update mcp_settings.json with your vault path
+# This is required for Smart Connections and obsidian-mcp to work
+# See MCP-SETUP.md for detailed configuration
 
 # 4. Start
 cd /path/to/your/vault && claude
@@ -24,6 +27,7 @@ cd /path/to/your/vault && claude
 
 → **[QUICKSTART.md](QUICKSTART.md)** for 5-minute setup
 → **[INSTALL.md](INSTALL.md)** for detailed installation
+→ **[MCP-SETUP.md](MCP-SETUP.md)** for MCP server configuration (required)
 
 ---
 
