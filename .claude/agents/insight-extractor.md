@@ -45,11 +45,49 @@ When analyzing large files:
 
 **CRITICAL: Follow this exact sequence to avoid duplicate notes and ensure originality**
 
+### Step 0: Knowledge Base Contextualization (DO THIS FIRST)
+
+**Before extracting any insights, understand the existing knowledge base context:**
+
+1. **Perform preliminary content scan**:
+   - Quick read of source material to identify main topics (AI, dopamine, decision-making, Buddhism, etc.)
+   - Note 3-5 primary themes or keywords
+
+2. **Search existing knowledge for context**:
+   ```
+   For each major topic/theme identified:
+   - Use mcp__smart-connections__search_notes with the topic
+   - Set threshold to 0.60 (broader exploration)
+   - Review top 5-10 results to understand:
+     * Existing terminology and framing
+     * Current frameworks and mental models
+     * Gaps or underexplored angles
+     * Dominant perspectives
+   ```
+
+3. **Build extraction context**:
+   - What terminology does the vault use for these concepts?
+   - What frameworks already exist that new insights could extend?
+   - What perspectives are missing or underrepresented?
+   - What connections between domains already exist?
+
+4. **Set extraction priorities**:
+   - Identify which insights would fill gaps
+   - Note which insights would create novel cross-domain bridges
+   - Recognize which insights would challenge existing perspectives
+
+**This context will help you:**
+- Frame extracted insights using vault's existing terminology
+- Recognize truly original angles vs. existing coverage
+- Make stronger connections during extraction
+- Prioritize insights that add the most value
+
 ### Step 1: Initial Analysis
 - Read the content (or first chunk for large files)
 - Identify the author's primary topics and concerns
 - Note distinctive language patterns and phrases
 - Look for recurring themes or obsessions
+- **Cross-reference with Step 0 knowledge base context**
 
 ### Step 2: Insight Mining
 For each potential insight, evaluate:
